@@ -87,22 +87,34 @@ public class RecursoRuta {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> recomendarPorTematica(RecomendarPorTematica recomendarPorTematica){
+    public RouterFunction<ServerResponse> recomendarPorTematica(RecomendarPorTematicaUseCase recomendarPorTematicaUseCase){
         return route(
                 GET("/recursos/recomendarportema/{tema}"),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(recomendarPorTematica.get(request.pathVariable("tema")), RecursoDTO.class))
+                        .body(BodyInserters.fromPublisher(recomendarPorTematicaUseCase.get(request.pathVariable("tema")), RecursoDTO.class))
                         .onErrorResume((Error) -> ServerResponse.badRequest().build())
         );
     }
+
     @Bean
-    public RouterFunction<ServerResponse> recomendarPorTipo(RecomendarPorTipo recomendarPorTipo){
+    public RouterFunction<ServerResponse> recomendarPorTipo(RecomendarPorTipoUseCase recomendarPorTipoUseCase){
         return route(
                 GET("/recursos/recomendarportema/{tipo}"),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(recomendarPorTipo.get(request.pathVariable("tipo")), RecursoDTO.class))
+                        .body(BodyInserters.fromPublisher(recomendarPorTipoUseCase.get(request.pathVariable("tipo")), RecursoDTO.class))
+                        .onErrorResume((Error) -> ServerResponse.badRequest().build())
+        );
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> recomendarPorTipoYTematica(RecomendarPorTipoYTematicaUseCase recomendarPorTipoYTematicaUseCase ){
+        return route(
+                GET("/recursos/recomendarportema/{tipo}/{tema}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(recomendarPorTipoYTematicaUseCase.get(request.pathVariable("tipo"), request.pathVariable("tema")), RecursoDTO.class))
                         .onErrorResume((Error) -> ServerResponse.badRequest().build())
         );
     }
