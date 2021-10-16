@@ -86,6 +86,17 @@ public class RecursoRuta {
         );
     }
 
+    @Bean
+    public RouterFunction<ServerResponse> recomendarPorTematica(RecomendarPorTematica recomendarPorTematica){
+        return route(
+                GET("/recursos/recomendarportema/{tema}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(recomendarPorTematica.get(request.pathVariable("tema")), RecursoDTO.class))
+                        .onErrorResume((Error) -> ServerResponse.badRequest().build())
+        );
+    }
+
 
 
 
