@@ -1,6 +1,7 @@
 package com.sofka.bibliotecaReactiva.routers;
 
 import com.sofka.bibliotecaReactiva.models.RecursoDTO;
+import com.sofka.bibliotecaReactiva.useCases.ActualizarRecursoUseCase;
 import com.sofka.bibliotecaReactiva.useCases.GuardarRecursoUseCase;
 import com.sofka.bibliotecaReactiva.useCases.ListaRecursoUseCase;
 import org.springframework.context.annotation.Bean;
@@ -39,5 +40,22 @@ public class RecursoRuta {
                 request -> request.bodyToMono(RecursoDTO.class).flatMap(exjecutor)
         );
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> actualizar(ActualizarRecursoUseCase actualizarRecursoUseCase){
+        Function<RecursoDTO, Mono<ServerResponse>> executor = recursoDTO -> actualizarRecursoUseCase.apply(recursoDTO)
+                .flatMap(result -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(result));
+
+        return route(
+                PUT("/recursos/editar")
+                        .and(accept(MediaType.APPLICATION_JSON)), request -> request
+                        .bodyToMono(RecursoDTO.class)
+                        .flatMap(executor)
+        );
+    }
+
+
 
 }
