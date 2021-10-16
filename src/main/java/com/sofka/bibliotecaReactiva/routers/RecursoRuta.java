@@ -1,10 +1,7 @@
 package com.sofka.bibliotecaReactiva.routers;
 
 import com.sofka.bibliotecaReactiva.models.RecursoDTO;
-import com.sofka.bibliotecaReactiva.useCases.ActualizarRecursoUseCase;
-import com.sofka.bibliotecaReactiva.useCases.EliminarRecursoUseCase;
-import com.sofka.bibliotecaReactiva.useCases.GuardarRecursoUseCase;
-import com.sofka.bibliotecaReactiva.useCases.ListaRecursoUseCase;
+import com.sofka.bibliotecaReactiva.useCases.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -66,6 +63,21 @@ public class RecursoRuta {
                         .body(BodyInserters.fromPublisher(eliminarRecursoUseCase.apply(request.pathVariable("id")), Void.class))
         );
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> disponibilidad(ComprobarDisponibilidadUseCase comprobarDisponibilidadUseCase){
+        return route(
+                GET("/recursos/disponibilidad/{id}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(comprobarDisponibilidadUseCase.apply(request.pathVariable("id")), String.class)
+                        ).onErrorResume((Error)-> ServerResponse.badRequest().build())
+        );
+    }
+
+
+
+
 
 
 }
