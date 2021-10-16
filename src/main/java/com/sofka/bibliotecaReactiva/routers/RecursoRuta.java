@@ -75,6 +75,16 @@ public class RecursoRuta {
         );
     }
 
+    @Bean
+    public RouterFunction<ServerResponse> prestar(PrestarUseCase prestarUseCase){
+        return  route(
+                PUT("/recursos/prestar/{id}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(prestarUseCase.apply(request.pathVariable("id")), String.class))
+                        .onErrorResume((Error) -> ServerResponse.badRequest().build())
+        );
+    }
 
 
 
