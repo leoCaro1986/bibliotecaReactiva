@@ -96,6 +96,16 @@ public class RecursoRuta {
                         .onErrorResume((Error) -> ServerResponse.badRequest().build())
         );
     }
+    @Bean
+    public RouterFunction<ServerResponse> recomendarPorTipo(RecomendarPorTipo recomendarPorTipo){
+        return route(
+                GET("/recursos/recomendarportema/{tipo}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(recomendarPorTipo.get(request.pathVariable("tipo")), RecursoDTO.class))
+                        .onErrorResume((Error) -> ServerResponse.badRequest().build())
+        );
+    }
 
 
 
