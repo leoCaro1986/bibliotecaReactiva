@@ -27,6 +27,7 @@ public class RecursoRuta {
         );
     }
 
+
     @Bean
     public RouterFunction<ServerResponse> guardar(GuardarRecursoUseCase guardarRecursoUseCase) {
         Function<RecursoDTO, Mono<ServerResponse>> exjecutor = recursoDTO -> guardarRecursoUseCase.apply(recursoDTO)
@@ -38,6 +39,7 @@ public class RecursoRuta {
                 request -> request.bodyToMono(RecursoDTO.class).flatMap(exjecutor)
         );
     }
+
 
     @Bean
     public RouterFunction<ServerResponse> actualizar(ActualizarRecursoUseCase actualizarRecursoUseCase){
@@ -54,6 +56,7 @@ public class RecursoRuta {
         );
     }
 
+
     @Bean
     public RouterFunction<ServerResponse> eliminar(EliminarRecursoUseCase eliminarRecursoUseCase){
         return route(
@@ -63,6 +66,7 @@ public class RecursoRuta {
                         .body(BodyInserters.fromPublisher(eliminarRecursoUseCase.apply(request.pathVariable("id")), Void.class))
         );
     }
+
 
     @Bean
     public RouterFunction<ServerResponse> disponibilidad(ComprobarDisponibilidadUseCase comprobarDisponibilidadUseCase){
@@ -75,6 +79,7 @@ public class RecursoRuta {
         );
     }
 
+
     @Bean
     public RouterFunction<ServerResponse> prestar(PrestarUseCase prestarUseCase){
         return  route(
@@ -85,6 +90,7 @@ public class RecursoRuta {
                         .onErrorResume((Error) -> ServerResponse.badRequest().build())
         );
     }
+
 
     @Bean
     public RouterFunction<ServerResponse> recomendarPorTematica(RecomendarPorTematicaUseCase recomendarPorTematicaUseCase){
@@ -97,6 +103,7 @@ public class RecursoRuta {
         );
     }
 
+
     @Bean
     public RouterFunction<ServerResponse> recomendarPorTipo(RecomendarPorTipoUseCase recomendarPorTipoUseCase){
         return route(
@@ -107,6 +114,7 @@ public class RecursoRuta {
                         .onErrorResume((Error) -> ServerResponse.badRequest().build())
         );
     }
+
 
     @Bean
     public RouterFunction<ServerResponse> recomendarPorTipoYTematica(RecomendarPorTipoYTematicaUseCase recomendarPorTipoYTematicaUseCase ){
@@ -120,7 +128,14 @@ public class RecursoRuta {
     }
 
 
-
-
-
+    @Bean
+    public RouterFunction<ServerResponse> regresarRecurso(RegresarRecursoUseCase regresarRecursoUseCase){
+        return route(
+                GET("/recursos/devolver/{id}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(regresarRecursoUseCase.apply(request.pathVariable("id")), String.class))
+                        .onErrorResume((Error) -> ServerResponse.badRequest().build())
+        );
+    }
 }
