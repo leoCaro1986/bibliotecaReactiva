@@ -2,6 +2,7 @@ package com.sofka.bibliotecaReactiva.routers;
 
 import com.sofka.bibliotecaReactiva.models.RecursoDTO;
 import com.sofka.bibliotecaReactiva.useCases.ActualizarRecursoUseCase;
+import com.sofka.bibliotecaReactiva.useCases.EliminarRecursoUseCase;
 import com.sofka.bibliotecaReactiva.useCases.GuardarRecursoUseCase;
 import com.sofka.bibliotecaReactiva.useCases.ListaRecursoUseCase;
 import org.springframework.context.annotation.Bean;
@@ -56,6 +57,15 @@ public class RecursoRuta {
         );
     }
 
+    @Bean
+    public RouterFunction<ServerResponse> eliminar(EliminarRecursoUseCase eliminarRecursoUseCase){
+        return route(
+                DELETE("/recursos/eliminar/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.accepted()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(eliminarRecursoUseCase.apply(request.pathVariable("id")), Void.class))
+        );
+    }
 
 
 }
