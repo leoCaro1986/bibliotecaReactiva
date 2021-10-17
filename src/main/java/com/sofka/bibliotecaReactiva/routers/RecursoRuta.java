@@ -30,13 +30,13 @@ public class RecursoRuta {
 
     @Bean
     public RouterFunction<ServerResponse> guardar(GuardarRecursoUseCase guardarRecursoUseCase) {
-        Function<RecursoDTO, Mono<ServerResponse>> exjecutor = recursoDTO -> guardarRecursoUseCase.apply(recursoDTO)
+        Function<RecursoDTO, Mono<ServerResponse>> executor = recursoDTO -> guardarRecursoUseCase.apply(recursoDTO)
                 .flatMap(result -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(result));
         return route(
                 POST("/recursos/agregar").and(accept(MediaType.APPLICATION_JSON)),
-                request -> request.bodyToMono(RecursoDTO.class).flatMap(exjecutor)
+                request -> request.bodyToMono(RecursoDTO.class).flatMap(executor)
         );
     }
 
@@ -119,7 +119,7 @@ public class RecursoRuta {
     @Bean
     public RouterFunction<ServerResponse> recomendarPorTipoYTematica(RecomendarPorTipoYTematicaUseCase recomendarPorTipoYTematicaUseCase ){
         return route(
-                GET("/recursos/recomendarportema/{tipo}/{tema}"),
+                GET("/recursos/recomendarportipoytema/{tipo}/{tema}"),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(recomendarPorTipoYTematicaUseCase.get(request.pathVariable("tipo"), request.pathVariable("tema")), RecursoDTO.class))

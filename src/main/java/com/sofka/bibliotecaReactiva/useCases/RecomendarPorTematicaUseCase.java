@@ -19,6 +19,6 @@ public class RecomendarPorTematicaUseCase implements RecomendarPorTematica {
 
     @Override
     public Flux<RecursoDTO> get(String tematicaRecurso) {
-        return repositorioRecurso.findAllBytematicaRecurso(tematicaRecurso).map(mapperUtils.mapEntityToResource());
+        return repositorioRecurso.findAllByTematica(tematicaRecurso).map(mapperUtils.mapEntityToResource());
     }
 }

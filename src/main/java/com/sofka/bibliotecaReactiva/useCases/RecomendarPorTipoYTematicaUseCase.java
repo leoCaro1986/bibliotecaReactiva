@@ -20,9 +20,9 @@ public class RecomendarPorTipoYTematicaUseCase implements RecomendarPorTipoYTema
     }
 
     @Override
-    public Flux<RecursoDTO> get(String tipoRecurso, String tematicaRecurso) {
-        Objects.requireNonNull(tipoRecurso, "El tipo no puede estar vacio");
-        Objects.requireNonNull(tematicaRecurso, "La tematica no puede estar vacia");
-        return repositorioRecurso.findAllBytipoYTematica(tipoRecurso, tematicaRecurso).map(mapperUtils.mapEntityToResource()).distinct();
+    public Flux<RecursoDTO> get(String tipo, String tematica) {
+        Objects.requireNonNull(tipo, "El tipo no puede estar vacio");
+        Objects.requireNonNull(tematica, "La tematica no puede estar vacia");
+        return repositorioRecurso.findAllByTipoAndTematica(tipo, tematica).map(mapperUtils.mapEntityToResource()).distinct();
     }
 }

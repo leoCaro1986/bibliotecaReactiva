@@ -13,8 +13,8 @@ public class MapperUtils {
             var recurso = new Recurso();
             recurso.setId(actualizarRecurso.getId());
             recurso.setNombreRecurso(actualizarRecurso.getNombreRecurso());
-            recurso.setTematicaRecurso(actualizarRecurso.getTematicaRecurso());
-            recurso.setTipoRecurso(actualizarRecurso.getTipoRecurso());
+            recurso.setTematica(actualizarRecurso.getTematica());
+            recurso.setTipo(actualizarRecurso.getTipo());
             recurso.setFechaPrestamo(actualizarRecurso.getFechaPrestamo());
             recurso.setCantidadDisponible(actualizarRecurso.getCantidadDisponible());
             recurso.setCantidadPrestada(actualizarRecurso.getCantidadPrestada());
@@ -26,8 +26,8 @@ public class MapperUtils {
         return entity -> new RecursoDTO(
                 entity.getId(),
                 entity.getNombreRecurso(),
-                entity.getTematicaRecurso(),
-                entity.getTipoRecurso(),
+                entity.getTematica(),
+                entity.getTipo(),
                 entity.getFechaPrestamo(),
                 entity.getCantidadDisponible(),
                 entity.getCantidadPrestada()

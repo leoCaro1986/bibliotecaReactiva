@@ -16,9 +16,9 @@ public class RecursoDTO {
     @NotBlank(message = "Debe completar el campo nombre del recurso")
     private String nombreRecurso;
     @NotBlank(message = "Por favor digite la tematica de recurso")
-    private String tematicaRecurso;
+    private String tematica;
     @NotBlank(message = "Por favor digite el tipo de recurso")
-    private String tipoRecurso;
+    private String tipo;
     private LocalDate fechaPrestamo;
     @NotNull(message = "Debe ingresar la cantidad del recurso")
     private Integer cantidadDisponible;

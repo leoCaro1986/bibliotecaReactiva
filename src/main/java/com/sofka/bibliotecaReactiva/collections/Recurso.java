@@ -19,8 +19,8 @@ public class Recurso {
     @Id
     private String id;
     private String nombreRecurso;
-    private String tematicaRecurso;
-    private String tipoRecurso;
+    private String tematica;
+    private String tipo;
     private LocalDate fechaPrestamo;
     private Integer cantidadDisponible;
     private Integer cantidadPrestada;
