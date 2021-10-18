@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
+
 @Document
 public class Recurso {
     @Id
@@ -24,4 +25,6 @@ public class Recurso {
     private LocalDate fechaPrestamo;
     private Integer cantidadDisponible;
     private Integer cantidadPrestada;
+
+
 }

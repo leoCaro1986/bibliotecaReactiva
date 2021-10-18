@@ -12,14 +12,18 @@ import java.util.function.Supplier;
 @Validated
 public class ListaRecursoUseCase implements Supplier<Flux<RecursoDTO>> {
     private final RepositorioRecurso repositorioRecurso;
+    private final MapperUtils mapperUtils;
 
-    public ListaRecursoUseCase(RepositorioRecurso repositorioRecurso) {
+    public ListaRecursoUseCase(RepositorioRecurso repositorioRecurso, MapperUtils mapperUtils) {
         this.repositorioRecurso = repositorioRecurso;
+        this.mapperUtils = mapperUtils;
     }
 
 
     @Override
     public Flux<RecursoDTO> get() {
-        return null;
+
+        return repositorioRecurso.findAll()
+                .map(mapperUtils.mapEntityToResource());
     }
 }
