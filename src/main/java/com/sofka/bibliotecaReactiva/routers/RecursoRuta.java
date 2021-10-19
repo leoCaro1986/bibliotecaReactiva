@@ -28,17 +28,7 @@ public class RecursoRuta {
     }
 
 
-    @Bean
-    public RouterFunction<ServerResponse> guardar(GuardarRecursoUseCase guardarRecursoUseCase) {
-        Function<RecursoDTO, Mono<ServerResponse>> executor = recursoDTO -> guardarRecursoUseCase.apply(recursoDTO)
-                .flatMap(result -> ServerResponse.ok()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .bodyValue(result));
-        return route(
-                POST("/recursos/agregar").and(accept(MediaType.APPLICATION_JSON)),
-                request -> request.bodyToMono(RecursoDTO.class).flatMap(executor)
-        );
-    }
+
 
 
     @Bean
@@ -56,16 +46,6 @@ public class RecursoRuta {
         );
     }
 
-
-    @Bean
-    public RouterFunction<ServerResponse> eliminar(EliminarRecursoUseCase eliminarRecursoUseCase){
-        return route(
-                DELETE("/recursos/eliminar/{id}").and(accept(MediaType.APPLICATION_JSON)),
-                request -> ServerResponse.accepted()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(eliminarRecursoUseCase.apply(request.pathVariable("id")), Void.class))
-        );
-    }
 
 
     @Bean
